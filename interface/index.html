@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>K-Means Sem Medo  | Guia Definitivo e Interativo de Agrupamento</title>
+  
+  <!-- Estilos e Design System Rosa & Preto -->
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/visualizer.css">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
+</head>
+<body>
+
+  <!-- ======================================================================
+       HEADER SUPERIOR FIXO
+       ====================================================================== -->
+  <header class="top-header">
+    <div class="brand-wrapper">
+      <button class="sidebar-toggle-btn" aria-label="Abrir Navegação">☰</button>
+      <div class="brand-logo" onclick="window.kmeansApp.switchTab('overview')">K</div>
+      <div class="brand-title">
+        K-Means Sem Medo <span style="font-size: 1.1rem;"></span>
+        <span class="badge-pibic">PIBIC / Ciência de Dados</span>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <button class="btn btn-primary btn-sm" onclick="window.kmeansApp.switchTab('playground')">
+        🎮 Abrir Playground
+      </button>
+    </div>
+  </header>
+
+  <div class="app-container">
+    <!-- ======================================================================
+         SIDEBAR DE NAVEGAÇÃO LATERAL
+         ====================================================================== -->
+    <aside class="sidebar">
+      <div>
+        <div class="sidebar-section-title">Fundamentos & Teoria</div>
+        <ul class="nav-list">
+          <li>
+            <a href="#overview" class="nav-item active" data-tab="overview">
+              <span class="nav-item-icon"></span> Visão Geral
+            </a>
+          </li>
+          <li>
+            <a href="#algorithm" class="nav-item" data-tab="algorithm">
+              <span class="nav-item-icon"></span> Algoritmo de Lloyd
+            </a>
+          </li>
+          <li>
+            <a href="#devmedia" class="nav-item" data-tab="devmedia">
+              <span class="nav-item-icon"></span> Exemplo DevMedia #4584
+            </a>
+          </li>
+        </ul>
+
+        <div class="sidebar-section-title" style="margin-top: 1.25rem;">Laboratório Interativo</div>
+        <ul class="nav-list">
+          <li>
+            <a href="#playground" class="nav-item" data-tab="playground">
+              <span class="nav-item-icon">🎮</span> Playground 2D
+            </a>
+          </li>
+          <li>
+            <a href="#elbow" class="nav-item" data-tab="elbow">
+              <span class="nav-item-icon"></span> Cotovelo & Silhueta
+            </a>
+          </li>
+          <li>
+            <a href="#pitfalls" class="nav-item" data-tab="pitfalls">
+              <span class="nav-item-icon"></span> Limitações (Google ML)
+            </a>
+          </li>
+        </ul>
+
+        <div class="sidebar-section-title" style="margin-top: 1.25rem;">Pesquisa PIBIC</div>
+        <ul class="nav-list">
+          <li>
+            <a href="#pibic" class="nav-item" data-tab="pibic">
+              <span class="nav-item-icon"></span> Redução de Iterações
+            </a>
+          </li>
+          <li>
+            <a href="#image-vq" class="nav-item" data-tab="image-vq">
+              <span class="nav-item-icon"></span> Quantização de Imagens
+            </a>
+          </li>
+          <li>
+            <a href="#math" class="nav-item" data-tab="math">
+              <span class="nav-item-icon"></span> Rigor Matemático
+            </a>
+          </li>
+        </ul>
+
+        <div class="sidebar-section-title" style="margin-top: 1.25rem;">Fixação & Prática</div>
+        <ul class="nav-list">
+          <li>
+            <a href="#quiz" class="nav-item" data-tab="quiz">
+              <span class="nav-item-icon"></span> Quiz do Pesquisador
+            </a>
+          </li>
+          <li>
+            <a href="#code" class="nav-item" data-tab="code">
+              <span class="nav-item-icon"></span> Código em Python
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-footer">
+        <div><strong>PIBIC:</strong> Redução de Iterações</div>
+        <div>Métrica: Distância Euclidiana Quadrática</div>
+        <div style="font-size: 0.72rem; color: var(--text-dim); margin-top: 0.25rem;">
+          Inspirado em MIPS Sem Medo & DevMedia
+        </div>
+      </div>
+    </aside>
+
+    <!-- ======================================================================
+         ÁREA PRINCIPAL DE CONTEÚDO
+         ====================================================================== -->
+    <main class="main-content">
+
+      <!-- ==================================================================
+           MÓDULO 1: VISÃO GERAL (OVERVIEW)
+           ================================================================== -->
+      <section id="module-overview" class="content-module active">
+        <div class="section-header">
+          <div class="section-tag">Desmistificando o K-Means</div>
+          <h1 class="section-title">Aprenda K-Means Sem Medo </h1>
+          <p class="section-subtitle">
+            O guia definitivo, interativo e visual sobre o algoritmo de agrupamento mais famoso da inteligência artificial. Da intuição geométrica e cálculos passo a passo às técnicas de redução de iterações do nosso projeto PIBIC.
+          </p>
+        </div>
+
+        <!-- Banner Hero com Estilo MIPS Sem Medo -->
+        <div class="card card-highlight" style="padding: 2.25rem; margin-bottom: 2rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem;">
+            <div style="max-width: 680px;">
+              <h2 style="font-size: 1.6rem; font-weight: 800; color: #ffffff; margin-bottom: 0.6rem;">
+                Por que aprender K-Means de verdade?
+              </h2>
+              <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.25rem;">
+                Na aprendizagem não-supervisionada, nós não temos rótulos prévios nem respostas prontas fornecidas por humanos. O K-Means precisa <strong>encontrar sozinho padrões e estruturas ocultas</strong> nos dados. Seja para comprimir fotos, segmentar clientes, diagnosticar imagens odontológicas ou transmitir sinais digitais, o K-Means é o coração pulsante do particionamento moderno.
+              </p>
+              <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                <button id="btnHeroPlayground" class="btn btn-primary">
+                  🎮 Ir para o Simulador Interativo
+                </button>
+                <button id="btnHeroDevMedia" class="btn btn-secondary">
+                  📖 Ver Exemplo Numérico DevMedia
+                </button>
+              </div>
+            </div>
+
+            <div style="background: rgba(10, 10, 16, 0.8); border: 1px solid var(--pink-border-active); border-radius: var(--radius-lg); padding: 1.5rem; min-width: 250px; text-align: center; box-shadow: 0 0 25px rgba(255, 42, 133, 0.2);">
+              <div style="font-size: 2.5rem; margin-bottom: 0.25rem;">📍 ➔ 🎯</div>
+              <div style="font-size: 1.2rem; font-weight: 800; color: var(--pink-bright);">K Grupos Ótimos</div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">
+                Minimizando a Distância Euclidiana Quadrática
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 Pilares Didáticos -->
+        <div class="grid-3" style="margin-bottom: 2rem;">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title"><span class="icon">🔍</span> 1. O Conceito Intuitivo</h3>
+            </div>
+            <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.6;">
+              Imagine que você precisa construir <strong>K postos de saúde</strong> ou pizzarias em uma grande metrópole. Onde posicioná-los para que a distância média percorrida por cada cidadão seja a menor possível? O K-Means resolve exatamente esse dilema geométrico!
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title"><span class="icon">⚡</span> 2. O Desafio do PIBIC</h3>
+            </div>
+            <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.6;">
+              Quando temos milhões de pontos ou vetores de imagens de alta resolução, o K-Means clássico gasta <strong>muitas iterações</strong> recalculando distâncias repetitivas. Nosso projeto PIBIC estuda técnicas para reduzir esse número sem perder qualidade.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title"><span class="icon">📐</span> 3. A Regra de Ouro</h3>
+            </div>
+            <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.6;">
+              Utilizamos a <strong>Distância Euclidiana Quadrática (d²)</strong>. Ela preserva rigorosamente a ordem de proximidade entre amostras e centróides enquanto poupa a dispendiosa computação de raízes quadradas nos processadores modernos.
+            </p>
+          </div>
+        </div>
+
+        <!-- Fontes e Referências -->
+        <div class="callout callout-tip">
+          <div class="callout-icon">📚</div>
+          <div class="callout-content">
+            <h4>Fontes Bibliográficas Centrais Deste Módulo:</h4>
+            <p>
+              • <strong>DevMedia:</strong> <em>"Data Mining na Prática: Algoritmo K-Means"</em> (<a href="https://www.devmedia.com.br/data-mining-na-pratica-algoritmo-k-means/4584" target="_blank" rel="noopener">Artigo #4584</a>)<br>
+              • <strong>Google Developers:</strong> <em>"Clustering with K-Means Overview"</em> (<a href="https://developers.google.com/machine-learning/clustering/kmeans/overview?hl=pt-br" target="_blank" rel="noopener">Guia Google ML</a>)<br>
+              • <strong>PIBIC / Periódicos CAPES:</strong> Artigos clássicos e contemporâneos de Lee et al. (1997), Paliwal & Ramasubramanian (2000), Bilal et al. (2021) e Madeiro et al. (CBIC / IEEE).
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================================================================
+           MÓDULO 2: O ALGORITMO DE LLOYD PASSO A PASSO
+           ================================================================== -->
+      <section id="module-algorithm" class="content-module">
+        <div class="section-header">
+          <div class="section-tag">Engenharia Algorítmica</div>
+          <h2 class="section-title">Como o K-Means Funciona por Dentro</h2>
+          <p class="section-subtitle">
+            O algoritmo padrão de Stuart Lloyd (1957/1982) estrutura-se em um loop iterativo de dois passos (Expectation-Maximization) que garante a convergência para um mínimo local.
+          </p>
+        </div>
+
+        <!-- As 4 Etapas Fundamentais em Cards -->
+        <div class="grid-2" style="margin-bottom: 2rem;">
+          <!-- Passo 1 -->
+          <div class="card" style="border-left: 4px solid var(--pink-neon);">
+            <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--pink-bright); margin-bottom: 0.3rem;">Passo 01</div>
+            <h3 style="font-size: 1.15rem; color: #ffffff; font-weight: 700; margin-bottom: 0.5rem;">
+              1. Inicialização dos Centróides (Seeding)
+            </h3>
+            <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.6;">
+              O algoritmo escolhe <strong>K pontos iniciais</strong> no espaço das características para servirem como representantes preliminares (centróides $\mu_1, \mu_2, \dots, \mu_K$). Pode ser feito aleatoriamente, com K-Means++ ou via Fast Codebook.
+            </p>
+          </div>
+
+          <!-- Passo 2 -->
+          <div class="card" style="border-left: 4px solid var(--cyan-neon);">
+            <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--cyan-neon); margin-bottom: 0.3rem;">Passo 02</div>
+            <h3 style="font-size: 1.15rem; color: #ffffff; font-weight: 700; margin-bottom: 0.5rem;">
+              2. Particionamento Voronoi (E-Step / Atribuição)
+            </h3>
+            <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.6;">
+              Para cada amostra $\mathbf{x}_i$, calcula-se a distância euclidiana quadrática para todos os K centróides. O ponto é associado ao centróide com a <strong>menor distância</strong>:
+              <br>
+              <code>c(i) = argmin_k || x_i - μ_k ||²</code>
+            </p>
+          </div>
+
+          <!-- Passo 3 -->
+          <div class="card" style="border-left: 4px solid var(--purple-neon);">
+            <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--purple-neon); margin-bottom: 0.3rem;">Passo 03</div>
+            <h3 style="font-size: 1.15rem; color: #ffffff; font-weight: 700; margin-bottom: 0.5rem;">
+              3. Atualização dos Centróides (M-Step / Média)
+            </h3>
+            <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.6;">
+              Cada centróide migra para o <strong>centro de massa (média aritmética)</strong> de todas as amostras que foram atribuídas a ele na iteração atual:
+              <br>
+              <code>μ_k = (1 / |S_k|) ∑_{x ∈ S_k} x</code>
+            </p>
+          </div>
+
+          <!-- Passo 4 -->
+          <div class="card" style="border-left: 4px solid var(--emerald-neon);">
+            <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--emerald-neon); margin-bottom: 0.3rem;">Passo 04</div>
+            <h3 style="font-size: 1.15rem; color: #ffffff; font-weight: 700; margin-bottom: 0.5rem;">
+              4. Checagem de Convergência (Stop Criterion)
+            </h3>
+            <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.6;">
+              O processo repete os Passos 2 e 3 até que ocorra uma das condições de parada:
+              <br>
+              • Os centróides se moveram menos que a tolerância $\epsilon$ ($\Delta \le tol$).<br>
+              • Nenhum ponto mudou de grupo.<br>
+              • O número máximo de iterações (<code>max_iter</code>) foi atingido.
+            </p>
+          </div>
+        </div>
+
+        <!-- Pseudocódigo Elegante com Destaque -->
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">Pseudocódigo Formal • Algoritmo de Lloyd</span>
+            <span>Complexidade: O(I · N · K · d)</span>
+          </div>
+          <pre class="code-pre"><code><span style="color: #ff2a85;">ALGORITMO</span> LloydKMeans(X, K, max_iter, tol):
+    <span style="color: var(--text-muted);">// 1. Inicialização dos K centróides</span>
+    μ ← InicializarCentróides(X, K)
+    
+    <span style="color: #ff2a85;">PARA</span> iteracao = 1 <span style="color: #ff2a85;">ATÉ</span> max_iter <span style="color: #ff2a85;">FAÇA:</span>
+        <span style="color: var(--text-muted);">// 2. Etapa de Associação (Partição de Voronoi)</span>
+        <span style="color: #06b6d4;">PARA CADA</span> x_i ∈ X <span style="color: #06b6d4;">FAÇA:</span>
+            labels[i] ← argmin_{k=1..K} || x_i - μ_k ||²
+        
+        <span style="color: var(--text-muted);">// 3. Etapa de Recálculo dos Centróides (Média)</span>
+        deslocamento_maximo ← 0
+        <span style="color: #a855f7;">PARA CADA</span> k = 1..K <span style="color: #a855f7;">FAÇA:</span>
+            membros ← { x_i ∈ X | labels[i] == k }
+            <span style="color: #ff2a85;">SE</span> |membros| > 0 <span style="color: #ff2a85;">ENTÃO:</span>
+                novo_μ ← (1 / |membros|) * ∑_{x ∈ membros} x
+                deslocamento ← || μ_k - novo_μ ||²
+                deslocamento_maximo ← max(deslocamento_maximo, deslocamento)
+                μ_k ← novo_μ
+        
+        <span style="color: var(--text-muted);">// 4. Critério de Parada por Convergência</span>
+        <span style="color: #10b981;">SE</span> deslocamento_maximo <= tol <span style="color: #10b981;">ENTÃO:</span>
+            <span style="color: #10b981;">RETORNE</span> (μ, labels, iteracao, "Convergido")
+            
+    <span style="color: #f59e0b;">RETORNE</span> (μ, labels, max_iter, "Max Iter Atingido")</code></pre>
+        </div>
+      </section>
+
+      <!-- ==================================================================
+           MÓDULO 3: EXEMPLO DIDÁTICO DEVMEDIA #4584
+           ================================================================== -->
+      <section id="module-devmedia" class="content-module">
+        <div class="section-header">
+          <div class="section-tag">Referência Prática Obrigatória</div>
+          <h2 class="section-title">O Exemplo Numérico da DevMedia</h2>
+          <p class="section-subtitle">
+            Como ensinado no clássico artigo <em>"Data Mining na Prática: Algoritmo K-Means"</em> (DevMedia #4584), acompanhe o cálculo na mão, número por número, de cada distância e cada nova média.
+          </p>
+        </div>
+
+        <div id="devmediaCalculatorContainer">
+          <!-- Conteúdo gerado dinamicamente por devmedia-calculator.js -->
+        </div>
+      </section>
+
+      <!-- ==================================================================
+           MÓDULO 4: PLAYGROUND INTERATIVO 2D
+           ================================================================== -->
+      <section id="module-playground" class="content-module">
+        <div class="section-header">
+          <div class="section-tag">Laboratório Visual</div>
+          <h2 class="section-title">Playground Interativo 2D</h2>
+          <p class="section-subtitle">
+            Clique no canvas para adicionar novos pontos, escolha a distribuição dos dados, altere o valor de K e veja a convergência de Lloyd acontecer diante dos seus olhos com animações em tempo real.
+          </p>
+        </div>
+
+        <div class="visualizer-wrapper">
+          <!-- Toolbar Superior -->
+          <div class="visualizer-toolbar">
+            <div class="toolbar-group">
+              <button id="btnPlay" class="btn btn-primary btn-sm">▶ Executar</button>
+              <button id="btnStep" class="btn btn-secondary btn-sm">⏭ Passo a Passo</button>
+              <button id="btnReset" class="btn btn-secondary btn-sm">↺ Reiniciar</button>
+            </div>
+
+            <div class="toolbar-group">
+              <span style="font-size: 0.8rem; color: var(--text-muted);">Clusters K:</span>
+              <input id="sliderK" type="range" min="1" max="8" value="3" style="width: 90px;">
+              <span id="labelKVal" style="font-size: 0.88rem; font-weight: 700; color: var(--pink-bright); font-family: var(--font-mono);">3</span>
+            </div>
+
+            <div class="toolbar-group">
+              <span style="font-size: 0.8rem; color: var(--text-muted);">Dataset:</span>
+              <select id="selectPreset" class="form-control" style="width: auto; padding: 0.35rem 0.65rem; font-size: 0.8rem;">
+                <option value="blobs">3 Blobs Gaussianos</option>
+                <option value="moons">Duas Luas (Falha do K-Means)</option>
+                <option value="circles">Anéis Concêntricos</option>
+                <option value="devmedia">Tabela DevMedia (6 pontos)</option>
+                <option value="uniform">Ruído Uniforme</option>
+              </select>
+            </div>
+
+            <div class="toolbar-group">
+              <span style="font-size: 0.8rem; color: var(--text-muted);">Inicialização:</span>
+              <select id="selectInit" class="form-control" style="width: auto; padding: 0.35rem 0.65rem; font-size: 0.8rem;">
+                <option value="kmeans++">K-Means++ (Recomendado)</option>
+                <option value="random">Aleatório Puro</option>
+                <option value="fast_codebook">Fast Codebook (PIBIC)</option>
+                <option value="manual">Posicionar Manualmente</option>
+              </select>
+            </div>
+
+            <div class="toolbar-group">
+              <span style="font-size: 0.8rem; color: var(--text-muted);">Velocidade:</span>
+              <input id="sliderSpeed" type="range" min="0.2" max="3.0" step="0.2" value="1.0" style="width: 70px;">
+              <span id="labelSpeedVal" style="font-size: 0.78rem; font-family: var(--font-mono); color: var(--text-secondary);">1.0x</span>
+            </div>
+          </div>
+
+          <!-- Canvas Principal -->
+          <div class="canvas-container">
+            <canvas id="clusteringCanvas"></canvas>
+
+            <!-- Painel HUD Flutuante -->
+            <div class="canvas-hud">
+              <div class="hud-item">
+                <span class="hud-label">Iteração:</span>
+                <span id="hudIteration" class="hud-value">0</span>
+              </div>
+              <div class="hud-item">
+                <span class="hud-label">Inércia SSE:</span>
+                <span id="hudSSE" class="hud-value">-</span>
+              </div>
+              <div class="hud-item">
+                <span class="hud-label">Δ Movimento:</span>
+                <span id="hudShift" class="hud-value">-</span>
+              </div>
+              <div class="hud-item">
+                <span class="hud-label">Cálculos d²:</span>
+                <span id="hudCalcs" class="hud-value">0</span>
+              </div>
+              <div class="hud-item" style="border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 0.25rem;">
+                <span class="hud-label">Status:</span>
+                <span id="hudStatus" class="hud-value">● Parado</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Rodapé com Toggles de Camadas -->
+          <div class="visualizer-footer">
+            <div class="layer-toggles">
+              <label class="checkbox-toggle">
+                <input type="checkbox" id="chkLayerVoronoi" checked> Células Voronoi
+              </label>
+              <label class="checkbox-toggle">
+                <input type="checkbox" id="chkLayerTrajectories" checked> Rastro dos Centróides
+              </label>
+              <label class="checkbox-toggle">
+                <input type="checkbox" id="chkLayerRadii" checked> Raio do Cluster
+              </label>
+              <label class="checkbox-toggle">
+                <input type="checkbox" id="chkLayerLines"> Vetores Ponto-Centróide
+              </label>
+            </div>
+
+            <div style="font-size: 0.75rem; color: var(--text-muted);">
+              💡 <em>Dica:</em> Clique esquerdo adiciona pontos • Botão direito remove pontos
+            </div>
+          </div>
+        </div>
+
+        <!-- Mini Gráfico de Convergência SSE -->
+        <div style="margin-top: 1.5rem;">
+          <h4 style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--pink-bright); margin-bottom: 0.4rem;">
+            Curva de Inércia (SSE) ao Longo das Iterações
+          </h4>
+          <div class="mini-chart-container">
+            <canvas id="sseChartCanvas"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================================================================
+           MÓDULO 5: COMO ESCOLHER O K IDEAL (COTOVELO & SILHUETA)
+           ================================================================== -->
+      <section id="module-elbow" class="content-module">
+        <div class="section-header">
+          <div class="section-tag">Seleção de Hiperparâmetros</div>
+          <h2 class="section-title">Como Escolher o Valor Ideal de K?</h2>
+          <p class="section-subtitle">
+            O K-Means exige que o número de clusters K seja fornecido de antemão. Conheça as duas técnicas mais consagradas: o <strong>Método do Cotovelo (Elbow Method)</strong> e o <strong>Coeficiente de Silhueta</strong>.
+          </p>
+        </div>
+
+        <div style="margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: center;">
+          <button id="btnRunElbowAnalysis" class="btn btn-primary btn-sm">
+            ⚡ Executar Análise para K = 1 até 8
+          </button>
+          <span style="font-size: 0.82rem; color: var(--text-muted);">
+            Testa iterativamente todos os valores e calcula o ponto de inflexão exato.
+          </span>
+        </div>
+
+        <!-- Resultados das Recomendações -->
+        <div id="elbowSummaryText" style="margin-bottom: 1.5rem;"></div>
+
+        <div class="grid-2">
+          <!-- Card do Cotovelo -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title"><span class="icon">📈</span> Método do Cotovelo (Elbow Method)</h3>
+            </div>
+            <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.5; margin-bottom: 0.75rem;">
+              Plota o SSE em função de K. Conforme K aumenta, o SSE cai naturalmente (com K=N o SSE seria zero). O "cotovelo" é o ponto onde o ganho marginal de adicionar mais um cluster deixa de valer o aumento na complexidade do modelo.
+            </p>
+            <div style="height: 240px; position: relative;">
+              <canvas id="elbowCanvas"></canvas>
+            </div>
+          </div>
+
+          <!-- Card da Silhueta -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title"><span class="icon">📊</span> Coeficiente de Silhueta</h3>
+            </div>
+            <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.5; margin-bottom: 0.75rem;">
+              Avalia o equilíbrio entre <strong>coesão intra-cluster</strong> (distância aos pontos do próprio grupo) e <strong>separação inter-cluster</strong> (distância ao cluster vizinho mais próximo). O K com maior score é o recomendado!
+            </p>
+            <div style="height: 240px; position: relative;">
+              <canvas id="silhouetteCanvas"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================================================================
+           MÓDULO 6: ARMADILHAS E LIMITAÇÕES (GOOGLE ML)
+           ================================================================== -->
+      <section id="module-pitfalls" class="content-module">
+        <div class="section-header">
+          <div class="section-tag">Visão Sênior & Google ML</div>
+          <h2 class="section-title">Onde o K-Means Falha: Armadilhas & Soluções</h2>
+          <p class="section-subtitle">
+            Como destacado no curso de Machine Learning do Google, o K-Means possui hipóteses geométricas rígidas que nem sempre refletem o mundo real. Entenda quando usá-lo e quando recorrer a outros algoritmos.
+          </p>
+        </div>
+
+        <div class="grid-2">
+          <!-- Armadilha 1 -->
+          <div class="card">
+            <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--rose-accent); margin-bottom: 0.25rem;">Armadilha 01</div>
+            <h3 style="font-size: 1.1rem; color: #ffffff; font-weight: 700; margin-bottom: 0.5rem;">
+              1. Formatos Não-Esféricos (Luas e Anéis)
+            </h3>
+            <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.6;">
+              O K-Means particiona o espaço em polígonos convexos (células de Voronoi) através de hiperplanos lineares. Portanto, se seus dados tiverem formato de anel concêntrico ou duas meias-luas entrelaçadas, o K-Means fatalmente cortará as formas ao meio.
+            </p>
+            <div class="callout callout-tip" style="margin-top: 0.75rem; padding: 0.75rem 1rem;">
+              <div class="callout-icon" style="font-size: 1.1rem;">💡</div>
+              <div class="callout-content" style="font-size: 0.82rem;">
+                <strong>Solução:</strong> Utilize algoritmos baseados em densidade como <strong>DBSCAN</strong> ou <strong>Spectral Clustering</strong>.
+              </div>
+            </div>
+          </div>
+
+          <!-- Armadilha 2 -->
+          <div class="card">
+            <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--rose-accent); margin-bottom: 0.25rem;">Armadilha 02</div>
+            <h3 style="font-size: 1.1rem; color: #ffffff; font-weight: 700; margin-bottom: 0.5rem;">
+              2. Densidades e Tamanhos Muito Díspares
+            </h3>
+            <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.6;">
+              Como o K-Means tenta minimizar a soma dos quadrados globalmente, ele tem uma tendência inata de preferir clusters de tamanhos e densidades similares. Ele "rouba" pontos periféricos de clusters densos para preencher clusters esparsos.
+            </p>
+            <div class="callout callout-tip" style="margin-top: 0.75rem; padding: 0.75rem 1rem;">
+              <div class="callout-icon" style="font-size: 1.1rem;">💡</div>
+              <div class="callout-content" style="font-size: 0.82rem;">
+                <strong>Solução:</strong> Use <strong>Modelos de Mistura Gaussiana (GMM)</strong> com matrizes de covariância livres.
+              </div>
+            </div>
+          </div>
+
+          <!-- Armadilha 3 -->
+          <div class="card">
+            <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--rose-accent); margin-bottom: 0.25rem;">Armadilha 03</div>
+            <h3 style="font-size: 1.1rem; color: #ffffff; font-weight: 700; margin-bottom: 0.5rem;">
+              3. Sensibilidade Extrema a Outliers
+            </h3>
+            <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.6;">
+              Como a distância euclidiana eleva as diferenças ao quadrado ($d^2$), um único outlier distante exerce uma atração gravitacional desproporcional sobre o centróide, puxando-o para longe do agrupamento real dos dados.
+            </p>
+            <div class="callout callout-tip" style="margin-top: 0.75rem; padding: 0.75rem 1rem;">
+              <div class="callout-icon" style="font-size: 1.1rem;">💡</div>
+              <div class="callout-content" style="font-size: 0.82rem;">
+                <strong>Solução:</strong> Remova previamente anomalias ou adote <strong>K-Medoids (PAM)</strong> ou K-Medians.
+              </div>
+            </div>
+          </div>
+
+          <!-- Armadilha 4 -->
+          <div class="card">
+            <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--rose-accent); margin-bottom: 0.25rem;">Armadilha 04</div>
+            <h3 style="font-size: 1.1rem; color: #ffffff; font-weight: 700; margin-bottom: 0.5rem;">
+              4. A Maldição da Dimensionalidade (d &gt; 50)
+            </h3>
+            <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.6;">
+              Em espaços de altíssima dimensão, todas as distâncias euclidianas tendem a convergir para valores muito próximos (o contraste entre o ponto mais perto e o mais longe desaparece). O K-Means perde o poder discriminativo.
+            </p>
+            <div class="callout callout-tip" style="margin-top: 0.75rem; padding: 0.75rem 1rem;">
+              <div class="callout-icon" style="font-size: 1.1rem;">💡</div>
+              <div class="callout-content" style="font-size: 0.82rem;">
+                <strong>Solução:</strong> Aplique redução de dimensionalidade (como <strong>PCA</strong> ou <strong>t-SNE/UMAP</strong>) antes da clusterização.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================================================================
+           MÓDULO 7: PESQUISA PIBIC (REDUÇÃO DE ITERAÇÕES)
+           ================================================================== -->
+      <section id="module-pibic" class="content-module">
+        <div class="section-header">
+          <div class="section-tag">Pesquisa de Iniciação Científica</div>
+          <h2 class="section-title">Redução do Número de Iterações do K-Means</h2>
+          <p class="section-subtitle">
+            Em Quantização Vetorial e processamento de sinais, cada iteração custa $O(N \cdot K)$ cálculos de distância. Entenda as duas técnicas estudadas neste plano de trabalho para acelerar a convergência.
+          </p>
+        </div>
+
+        <div id="pibicBenchmarkContainer" style="margin-bottom: 2rem;">
+          <!-- Benchmark gerado dinamicamente por pibic-benchmark.js -->
+        </div>
+
+        <div class="grid-2">
+          <!-- Técnica 1 -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title" style="color: #06b6d4;">
+                <span class="icon">🔹</span> Técnica 1: Modified K-Means
+              </h3>
+            </div>
+            <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.6rem;">
+              Lee, Baek & Sung (1997) • Paliwal & Ramasubramanian (2000)
+            </div>
+            <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.6;">
+              Monitora o deslocamento dos centróides entre iterações sucessivas ($\Delta\mu_k$). Se um centróide praticamente não se moveu ($\Delta < \delta$), os pontos que já estavam profundamente dentro da sua célula de Voronoi não precisam recalcular sua distância para outros centróides que também estão inativos.
+            </p>
+            <ul style="color: #a5f3fc; font-size: 0.82rem; margin-top: 0.75rem; padding-left: 1.25rem; line-height: 1.6;">
+              <li>Poupe de 40% a 70% dos cálculos aritméticos de distância;</li>
+              <li>Preserva a mesma partição matemática do algoritmo clássico;</li>
+              <li>Excelente para hardware embarcado e transmissão de dados em tempo real.</li>
+            </ul>
+          </div>
+
+          <!-- Técnica 2 -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title" style="color: var(--pink-bright);">
+                <span class="icon">🌸</span> Técnica 2: Fast Codebook Generation
+              </h3>
+            </div>
+            <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.6rem;">
+              Bilal, Ullah & Islam (2021) • Calazans et al. (2019) • Lima et al. (2024)
+            </div>
+            <p style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.6;">
+              O grande culpado pela lentidão do K-Means tradicional é a inicialização aleatória cega. O Fast Codebook analisa previamente a variância e a dispersão das amostras (pattern masking) para colocar os centróides iniciais já espalhados nos cantos certos do espaço.
+            </p>
+            <ul style="color: var(--pink-soft); font-size: 0.82rem; margin-top: 0.75rem; padding-left: 1.25rem; line-height: 1.6;">
+              <li>Corta o número de iterações de convergência pela metade ou mais;</li>
+              <li>Evita que múltiplos centróides comecem aglomerados na mesma região;</li>
+              <li>Gera dicionários (codebooks) de altíssima fidelidade com menos passos.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================================================================
+           MÓDULO 8: QUANTIZAÇÃO VETORIAL DE IMAGENS
+           ================================================================== -->
+      <section id="module-image-vq" class="content-module">
+        <div class="section-header">
+          <div class="section-tag">Aplicação Real do PIBIC</div>
+          <h2 class="section-title">Quantização Vetorial de Imagens</h2>
+          <p class="section-subtitle">
+            Como o K-Means atua no processamento digital de imagens criando um <strong>Codebook (dicionário de cores)</strong> para comprimir fotos coloridas de 24 bits para 1, 2, 3 ou 4 bits por pixel.
+          </p>
+        </div>
+
+        <div class="card card-highlight">
+          <div class="card-header">
+            <div>
+              <h3 class="card-title"><span class="icon">🎨</span> Simulador de Compressão Vetorial de Cores</h3>
+              <p class="card-subtitle">Cada pixel (R, G, B) é um ponto tridimensional clusterizado pelo K-Means</p>
+            </div>
+            <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+              <select id="selectVQK" class="form-control" style="width: auto; padding: 0.4rem 0.75rem; font-size: 0.82rem;">
+                <option value="2">K = 2 cores (1 bpp)</option>
+                <option value="4">K = 4 cores (2 bpp)</option>
+                <option value="8" selected>K = 8 cores (3 bpp)</option>
+                <option value="16">K = 16 cores (4 bpp)</option>
+                <option value="32">K = 32 cores (5 bpp)</option>
+              </select>
+
+              <select id="selectVQImagePreset" class="form-control" style="width: auto; padding: 0.4rem 0.75rem; font-size: 0.82rem;">
+                <option value="gradient">Pôr do Sol Synthwave</option>
+                <option value="geometric">Formas Geométricas</option>
+                <option value="texture">Textura Multicolorida</option>
+              </select>
+
+              <label class="btn btn-secondary btn-sm" style="margin: 0; cursor: pointer;">
+                📁 Enviar Minha Foto
+                <input type="file" id="inputVQUpload" accept="image/*" style="display: none;">
+              </label>
+
+              <button id="btnRunImageVQ" class="btn btn-primary btn-sm">⚡ Requantizar</button>
+            </div>
+          </div>
+
+          <!-- Lado a Lado: Original vs Quantizada -->
+          <div class="image-vq-grid">
+            <div class="image-preview-box">
+              <span style="font-size: 0.85rem; font-weight: 700; color: #ffffff;">Imagem Original (24 bits/pixel • 16.7M cores)</span>
+              <canvas id="vqOriginalCanvas"></canvas>
+            </div>
+
+            <div class="image-preview-box" style="border-color: var(--pink-border-active);">
+              <span style="font-size: 0.85rem; font-weight: 700; color: var(--pink-bright);">Imagem Quantizada (Codebook K-Means)</span>
+              <canvas id="vqQuantizedCanvas"></canvas>
+            </div>
+          </div>
+
+          <!-- Métricas de Avaliação PIBIC -->
+          <div class="grid-4" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 1.25rem;">
+            <div class="stat-card">
+              <span class="stat-label">PSNR (Fidelidade)</span>
+              <span id="vqPSNR" class="stat-value" style="font-size: 1.4rem;">- dB</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">MSE (Erro Quadrático)</span>
+              <span id="vqMSE" class="stat-value" style="font-size: 1.4rem;">-</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">Taxa de Bits</span>
+              <span id="vqBits" class="stat-value" style="font-size: 1.4rem; color: #06b6d4;">-</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">Iterações Gastas</span>
+              <span id="vqIter" class="stat-value" style="font-size: 1.4rem; color: var(--emerald-neon);">-</span>
+            </div>
+          </div>
+
+          <!-- Paleta de Cores do Codebook -->
+          <div style="margin-top: 1.25rem; text-align: center;">
+            <span style="font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted);">
+              Codebook Gerado (Centróides Ótimos de Cor RGB):
+            </span>
+            <div id="vqPaletteContainer" class="palette-swatches"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================================================================
+           MÓDULO 9: RIGOR MATEMÁTICO
+           ================================================================== -->
+      <section id="module-math" class="content-module">
+        <div class="section-header">
+          <div class="section-tag">Fundamentação Formal</div>
+          <h2 class="section-title">A Matemática do K-Means em Detalhes</h2>
+          <p class="section-subtitle">
+            Demonstrações analíticas, cálculo de gradientes e provas de que a média aritmética minimiza a soma dos erros quadráticos.
+          </p>
+        </div>
+
+        <div id="formulasContainer">
+          <!-- Conteúdo gerado dinamicamente por formulas.js -->
+        </div>
+      </section>
+
+      <!-- ==================================================================
+           MÓDULO 10: QUIZ DO PESQUISADOR
+           ================================================================== -->
+      <section id="module-quiz" class="content-module">
+        <div class="section-header">
+          <div class="section-tag">Autoavaliação</div>
+          <h2 class="section-title">Desafio: K-Means Sem Medo</h2>
+          <p class="section-subtitle">
+            Responda às questões conceituais e matemáticas para validar seu domínio pleno sobre o algoritmo e as técnicas de redução de iterações do PIBIC.
+          </p>
+        </div>
+
+        <div id="quizContainer">
+          <!-- Conteúdo gerado dinamicamente por quiz-engine.js -->
+        </div>
+      </section>
+
+      <!-- ==================================================================
+           MÓDULO 11: CÓDIGO EM PYTHON (PRONTO PARA USO)
+           ================================================================== -->
+      <section id="module-code" class="content-module">
+        <div class="section-header">
+          <div class="section-tag">Implementação Sênior</div>
+          <h2 class="section-title">Código em Python: Do Zero ao PIBIC</h2>
+          <p class="section-subtitle">
+            Snippets limpos, comentados e prontos para serem integrados aos seus experimentos ou notebooks de pesquisa.
+          </p>
+        </div>
+
+        <!-- Snippet 1: BaseKMeans & Distância Euclidiana Quadrática -->
+        <div class="card" style="margin-bottom: 1.5rem;">
+          <div class="card-header">
+            <h3 class="card-title"><span class="icon">🐍</span> 1. Distância Euclidiana Quadrática em Python Puro</h3>
+          </div>
+          <p style="color: var(--text-secondary); font-size: 0.88rem; margin-bottom: 0.75rem;">
+            Implementação da métrica obrigatória do plano de trabalho PIBIC:
+          </p>
+          <div class="code-block" style="margin: 0;">
+            <div class="code-header">
+              <span class="code-lang">python • distance.py</span>
+            </div>
+            <pre class="code-pre"><code><span style="color: #ff2a85;">def</span> <span style="color: #06b6d4;">squared_euclidean_distance</span>(point_a, point_b) -> <span style="color: #a855f7;">float</span>:
+    <span style="color: var(--text-muted);">"""Calcula a distância euclidiana quadrática d²(a, b) = sum((a_j - b_j)²).
+    Elimina o custo da raiz quadrada (sqrt), preservando rigorosamente
+    a partição de Voronoi."""</span>
+    <span style="color: #ff2a85;">return</span> sum((float(a) - float(b)) ** 2 <span style="color: #ff2a85;">for</span> a, b <span style="color: #ff2a85;">in</span> zip(point_a, point_b))</code></pre>
+          </div>
+        </div>
+
+        <!-- Snippet 2: StandardKMeans (Lloyd) -->
+        <div class="card" style="margin-bottom: 1.5rem;">
+          <div class="card-header">
+            <h3 class="card-title"><span class="icon">🐍</span> 2. K-Means de Lloyd (Linha de Base do Repositório)</h3>
+          </div>
+          <div class="code-block" style="margin: 0;">
+            <div class="code-header">
+              <span class="code-lang">python • src/kmeans_reduction/standard_kmeans.py</span>
+            </div>
+            <pre class="code-pre"><code><span style="color: #ff2a85;">from</span> kmeans_reduction.standard_kmeans <span style="color: #ff2a85;">import</span> StandardKMeans
+
+<span style="color: var(--text-muted);"># Instancia o algoritmo com distância quadrática</span>
+kmeans = StandardKMeans(n_clusters=4, max_iter=300, tol=1e-4, random_state=42)
+
+<span style="color: var(--text-muted);"># Ajusta aos dados de entrada</span>
+kmeans.fit(X)
+
+<span style="color: #ff2a85;">print</span>(f<span style="color: #10b981;">"Iterações até a convergência: {kmeans.n_iter_}"</span>)
+<span style="color: #ff2a85;">print</span>(f<span style="color: #10b981;">"Inércia final (SSE): {kmeans.inertia_:.4f}"</span>)
+<span style="color: #ff2a85;">print</span>(f<span style="color: #10b981;">"Centróides finais: {kmeans.cluster_centers_}"</span>)</code></pre>
+          </div>
+        </div>
+
+        <!-- Snippet 3: ModifiedKMeans -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title"><span class="icon">🚀</span> 3. Executando a Técnica 1 (ModifiedKMeans)</h3>
+          </div>
+          <div class="code-block" style="margin: 0;">
+            <div class="code-header">
+              <span class="code-lang">python • src/kmeans_reduction/techniques/modified_kmeans.py</span>
+            </div>
+            <pre class="code-pre"><code><span style="color: #ff2a85;">from</span> kmeans_reduction.techniques.modified_kmeans <span style="color: #ff2a85;">import</span> ModifiedKMeans
+
+<span style="color: var(--text-muted);"># Monitoramento dinâmico de centróides ativos com limiar delta</span>
+mod_kmeans = ModifiedKMeans(
+    n_clusters=4,
+    activity_threshold=1e-3,  <span style="color: var(--text-muted);"># limiar de estabilidade</span>
+    max_iter=300,
+    random_state=42
+)
+
+mod_kmeans.fit(X)
+<span style="color: #ff2a85;">print</span>(f<span style="color: #10b981;">"Cálculos de distância poupados: {mod_kmeans.distance_calculations_saved_}"</span>)</code></pre>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Scripts da Aplicação em Módulos ES6 -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

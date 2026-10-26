@@ -1,0 +1,185 @@
+/* ==========================================================================
+   K-MEANS SEM MEDO - TEMA & DESIGN SYSTEM (ROSA & PRETO)
+   Inspirado no estilo descontraído, didático e de alto impacto visual
+   do repositório MIPS Sem Medo, adaptado para Ciência de Dados & PIBIC.
+   ========================================================================== */
+
+:root {
+  /* Paleta Base: Variantes de Preto e Grafite */
+  --bg-void: #060609;
+  --bg-base: #0b0b12;
+  --bg-card: #12121c;
+  --bg-card-hover: #191928;
+  --bg-card-elevated: #202033;
+  --bg-card-glass: rgba(18, 18, 28, 0.85);
+
+  /* Paleta Destaque: Variantes de Rosa & Neon */
+  --pink-neon: #ff2a85;
+  --pink-bright: #ff479c;
+  --pink-light: #ff70b5;
+  --pink-soft: #ffa3cf;
+  --pink-subtle: #ffd6e8;
+  --pink-muted: #9d174d;
+  --pink-dark: #50072b;
+  --pink-glow: rgba(255, 42, 133, 0.45);
+  --pink-glow-soft: rgba(255, 42, 133, 0.15);
+  --pink-border: rgba(255, 42, 133, 0.3);
+  --pink-border-active: #ff2a85;
+
+  /* Cores de Apoio / Status */
+  --cyan-neon: #06b6d4;
+  --purple-neon: #a855f7;
+  --emerald-neon: #10b981;
+  --amber-neon: #f59e0b;
+  --rose-accent: #f43f5e;
+
+  /* Paleta para Clusters (K=1 a 8) */
+  --cluster-0: #ff2a85;  /* Rosa Neon Principal */
+  --cluster-1: #06b6d4;  /* Ciano Elétrico */
+  --cluster-2: #a855f7;  /* Roxo Cibernético */
+  --cluster-3: #f59e0b;  /* Âmbar Vibrante */
+  --cluster-4: #10b981;  /* Esmeralda */
+  --cluster-5: #38bdf8;  /* Azul Céu */
+  --cluster-6: #ec4899;  /* Rosa Magenta */
+  --cluster-7: #fbbf24;  /* Dourado */
+
+  /* Tipografia */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+
+  /* Textos */
+  --text-primary: #fff0f7;
+  --text-secondary: #d6b5c9;
+  --text-muted: #8e7384;
+  --text-dim: #5c4755;
+  --text-pink: #ff66aa;
+
+  /* Bordas e Sombras */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.6);
+  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.7);
+  --shadow-lg: 0 10px 35px rgba(0, 0, 0, 0.85);
+  --shadow-pink-glow: 0 0 25px var(--pink-glow);
+  --shadow-pink-sm: 0 0 12px rgba(255, 42, 133, 0.3);
+
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Reset Básico */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-void);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  background-image: 
+    radial-gradient(circle at 15% 10%, rgba(255, 42, 133, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 85% 80%, rgba(168, 85, 247, 0.06) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.03) 0%, transparent 60%);
+  background-attachment: fixed;
+}
+
+/* Scrollbar Personalizada Rosa & Preto */
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-base);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #33192a;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--bg-base);
+  transition: background var(--transition-fast);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--pink-muted);
+}
+
+/* Seleção de Texto */
+::selection {
+  background: var(--pink-neon);
+  color: #ffffff;
+}
+
+/* Links */
+a {
+  color: var(--pink-bright);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--pink-soft);
+  text-decoration: underline;
+}
+
+/* Utilitários de Texto Neon */
+.text-pink { color: var(--pink-neon) !important; }
+.text-pink-soft { color: var(--pink-soft) !important; }
+.text-muted { color: var(--text-muted) !important; }
+.text-mono { font-family: var(--font-mono) !important; }
+
+.glow-pink-text {
+  color: var(--pink-neon);
+  text-shadow: 0 0 15px rgba(255, 42, 133, 0.6);
+}
+
+.glow-pink-box {
+  box-shadow: 0 0 20px rgba(255, 42, 133, 0.25);
+  border-color: var(--pink-neon) !important;
+}
+
+/* Animações */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(255, 42, 133, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 42, 133, 0.7);
+  }
+}
+
+@keyframes floatGentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn var(--transition-normal) forwards;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 3s infinite ease-in-out;
+}
+
